@@ -9,8 +9,8 @@ To Run the Flask Server Simply Run the Command: inside the flask-api directory w
 Run the flask server and react server simultaneously
 
 # Getting Started with Create React App
-Download NodeJS
-Run npm install in directory where package.json is 
+Download NodeJS: https://nodejs.org/en/download/ \
+Run npm install in directory where package.json is.\ 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
