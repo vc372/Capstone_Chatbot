@@ -1,0 +1,14 @@
+  
+{"friendship": [
+	{"tag": "long distance",
+		"patterns": ["long distance", "they live far away", "distance", "they moved across the country", "moving", "moving across the country"],
+	},
+
+	{"tag": "games",
+		"patterns": ["I am bored", "I wish things were more fun", "we have nothing to do", "I wish there were more activities", "activities", "games", "things to do", "getting boring"],
+	},
+	{"tag": "communication",
+		"patterns": ["we had an argument", "we have trouble communicating", "we just argued", "there's nothing to talk about", "there was a misunderstanding", "they aren't listening", "listen", "communicate", "texting", "they don't respond to my texts", ],
+	},
+]
+}
