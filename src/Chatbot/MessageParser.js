@@ -11,17 +11,17 @@ class MessageParser{
   async parse(message) {
   	// console.log(this.state.webcam.current.getScreenshot())
   	if(this.currentState !== 'issues'){
-  		await fetch('/process_message?message='+message)
-  		.then(response => response.json())
-  		.then(data => this.setCurrentState(data['Response_text']))
+		await fetch('/process_message?message='+message)
+		.then(response => response.json())
+		.then(data => this.setCurrentState(data['Response_text']))
 
-  		let data = {image: this.state.webcam.current.getScreenshot()}
-  		await fetch('/process_image', {
-  			method: 'POST',
-  			body: JSON.stringify(data)
-  		})
-  		.then(response => response.json())
-  		.then(data => console.log(data))
+		let data = {image: this.state.webcam.current.getScreenshot()}
+		await fetch('/process_image', {
+			method: 'POST',
+			body: JSON.stringify(data)
+		})
+		.then(response => response.json())
+		.then(data => console.log(data))
   	}
 
  	switch(this.currentState){

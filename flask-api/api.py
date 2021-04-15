@@ -6,6 +6,7 @@ import numpy as np
 import json
 import data_processing
 import nltk
+import facial_recognition
 
 app = Flask(__name__)
 
@@ -19,6 +20,8 @@ def init_resources():
 	app.wv = api.load('glove-twitter-25')
 	app.embedding_matrix = np.load('Resources/Embedding_Matrices/general_intents_embedding.npy')
 	app.labels = np.load('Resources/Intent_Labels/general_intent_labels.npy')
+	detector, predictor = facial_recognition.get_detection_classifier()
+	facial_recognition.get_model()
 
 
 @app.route('/process_message', methods=['GET'])
@@ -32,8 +35,10 @@ def message_api():
 def image_api():
 	img_data = request.data
 	img_data = json.loads(img_data)['image']
-	data_processing.save_image(img_data)	
-	return {'Image_label': 'Sent Back From Flask'}
+	data_processing.save_image(img_data)
+	detector, predictor = facial_recognition.get_detection_classifier()
+	label = facial_recognition.classify_image('Resources/screenshot.png', 'Resources/fer/model.pth', detector, predictor)
+	return {'Image_label': str(label)}
 
 	
 
