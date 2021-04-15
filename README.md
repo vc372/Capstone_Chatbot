@@ -1,10 +1,12 @@
 # Python Set Up
-Download the Pre_Trained_Word_Vectors folder from google drive and place in "Resources" 
 pip install -r /path/to/requirements.txt
+
 To Run the Flask Server Simply Run the Command: inside the flask-api directory w/ "app.py"
-*set FLASK_APP=hello.py                                                                                                
-*set FLASK_ENV=development                                                                                             
-*flask run 
+* set FLASK_APP=hello.py                                                                                                
+* set FLASK_ENV=development                                                                                             
+* python -m flask
+
+Run the flask server and react server simultaneously
 
 # Getting Started with Create React App
 
