@@ -2,14 +2,11 @@
 pip install -r /path/to/requirements.txt
 
 To Run the Flask Server Simply Run the Command: inside the flask-api directory w/ "app.py"
-
 * set FLASK_APP=hello.py                                                                                                
-
 * set FLASK_ENV=development                                                                                             
-
 * flask run 
-  
-  Run the flask server and react server simultaneously
+
+Run the flask server and react server simultaneously
 
 # Getting Started with Create React App
 
