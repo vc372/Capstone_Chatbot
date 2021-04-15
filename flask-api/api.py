@@ -5,6 +5,7 @@ import gensim.downloader as api
 import numpy as np
 import json
 import data_processing
+import nltk
 
 app = Flask(__name__)
 
@@ -12,6 +13,7 @@ app = Flask(__name__)
 def init_resources():
 	print('loading resources')
 	# app.wv = KeyedVectors.load('Resources/Pre_Trained_Word_Vectors/glove.wordvectors', mmap='r')
+	nltk.download('punkt')
 	app.wv = api.load('glove-twitter-25')
 	app.embedding_matrix = np.load('Resources/Embedding_Matrices/general_intents_embedding.npy')
 	app.labels = np.load('Resources/Intent_Labels/general_intent_labels.npy')
