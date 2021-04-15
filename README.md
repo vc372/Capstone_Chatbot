@@ -1,15 +1,16 @@
 # Python Set Up
-pip install -r /path/to/requirements.txt
+pip install -r /path/to/requirements.txt (might need to download gensim again, we'll see :D)
 
-To Run the Flask Server Simply Run the Command: inside the flask-api directory w/ "app.py"
-* set FLASK_APP=hello.py                                                                                                
+To Run the Flask Server Simply Run the Command: inside the flask-api directory w/ "api.py"
+* set FLASK_APP=api.py                                                                                                
 * set FLASK_ENV=development                                                                                             
-* python -m flask
+* python -m flask run
 
 Run the flask server and react server simultaneously
 
 # Getting Started with Create React App
-
+Download NodeJS
+Run npm install in directory where package.json is 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
