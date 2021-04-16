@@ -1,0 +1,10 @@
+{"relationships": [
+	{"tag": "friendship",
+		"patterns": ["friend", "friends", "bestie", "bestfriend", "best friend", "butt buddy", "butt-buddy", "buddy", "acquaintance", "pal"],
+	},
+
+	{"tag": "partner",
+		"patterns": ["girlfriend", "boyfriend", "significant other", "partner", "confidant", "spouse", "husband", "wife", "hubby", "sweetheart"],
+	},
+]
+}

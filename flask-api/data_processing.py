@@ -12,6 +12,7 @@ def save_image(img_data):
 
 def generate_response(query, wv, embedding_matrix, y):
 	query = preprocess(query)
+	print(query)
 	vectorized_query = create_word_embeddings(query, wv)
 	if(np.count_nonzero(vectorized_query) == 0):
 		return "unrecognized"

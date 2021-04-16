@@ -1,9 +1,26 @@
 // ActionProvider starter code
+import fetchEmotion from './API_Retrieval/fetchEmotion';
+import takeScreenshot from './API_Retrieval/takeScreenshot';
 class ActionProvider {
   constructor(createChatBotMessage, setStateFunc, createClientMessage) {
     this.createChatBotMessage = createChatBotMessage;
     this.setState = setStateFunc;
     this.createClientMessage = createClientMessage;
+  }
+
+  async start(webcamref) {
+    let image = takeScreenshot(webcamref)
+    let emotion = await fetchEmotion(image)
+    let startMessage = ''
+    if(emotion === 'happy'){
+      startMessage = this.createChatBotMessage('Somebody is in a good mood 😊, wanna tell me what happened today?')
+    } else if(emotion === 'sad'){
+      startMessage = this.createChatBotMessage('Something bothering you today?')
+    } else {
+      startMessage = this.createChatBotMessage('How was your day?')
+    }
+    
+    this.updateChatbotState(startMessage)
   }
 
   greet() {

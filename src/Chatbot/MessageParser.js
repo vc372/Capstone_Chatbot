@@ -1,66 +1,64 @@
 // MessageParser starter code
-
+import fetchEmotion from './API_Retrieval/fetchEmotion';
+import fetchResponseType from './API_Retrieval/fetchResponseType';
+import takeScreenshot from './API_Retrieval/takeScreenshot';
 class MessageParser{
 
   constructor(actionProvider, state) {
     this.actionProvider = actionProvider;
     this.state = state;
-    this.currentState = ''
   }
 
   async parse(message) {
-  	// console.log(this.state.webcam.current.getScreenshot())
-  	if(this.currentState !== 'issues'){
-		await fetch('/process_message?message='+message)
-		.then(response => response.json())
-		.then(data => this.setCurrentState(data['Response_text']))
-
-		let data = {image: this.state.webcam.current.getScreenshot()}
-		await fetch('/process_image', {
-			method: 'POST',
-			body: JSON.stringify(data)
-		})
-		.then(response => response.json())
-		.then(data => console.log(data))
-  	}
-
- 	switch(this.currentState){
-
- 		case 'greeting':
- 			this.actionProvider.greet()
- 			break;
-
- 		case 'goodbye':
- 			this.actionProvider.sayGoodbye()
- 			break;
-
- 		case 'help':
- 			this.actionProvider.askForAssistance()
- 			break;
-
- 		case 'name':
- 			this.actionProvider.giveName()
- 			break;
-
- 		case 'appreciation':
- 			this.actionProvider.giveAppreciation()
- 			break;
-
- 		case 'issues':
- 			break;
-
- 		default:
- 			this.actionProvider.askForExplanation()
-
- 	}
-
- 
+  	
+    let image = takeScreenshot(this.state.webcam)
+    let currentEmotion = await fetchEmotion(image)
+    let currentResponseType = await fetchResponseType(message)
+    this.setEmotion(currentEmotion)
+    this.setTopic(currentResponseType)
+    console.log(this.state)
     
-  }
+    switch(this.state.topic){
 
-  setCurrentState(state) {
-  	this.currentState = state
-  }
+     case 'greeting':
+     this.actionProvider.greet()
+     break;
+
+     case 'goodbye':
+     this.actionProvider.sayGoodbye()
+     break;
+
+     case 'help':
+     this.actionProvider.askForAssistance()
+     break;
+
+     case 'name':
+     this.actionProvider.giveName()
+     break;
+
+     case 'appreciation':
+     this.actionProvider.giveAppreciation()
+     break;
+
+     case 'issues':
+     break;
+
+     default:
+     this.actionProvider.askForExplanation()
+
+   }
+
+
+
+ }
+
+ setTopic(topic) {
+   this.state.topic = topic
+ }
+
+ setEmotion(emotion) {
+  this.state.emotion = emotion
+}
 }
 
 export default MessageParser;
