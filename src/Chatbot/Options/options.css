@@ -18,7 +18,8 @@
   transition: 0.25s;
   position: relative;
   overflow: hidden;
-  font-weight:bold;
+  font-family: 'Arial';
+  font-weight: bold;
 
 }
 

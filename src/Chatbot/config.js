@@ -10,7 +10,7 @@ const config = (webcamRef) =>{
 			widget: 'StartUpOptions',
 		})], 
 		state: {
-			topic: 'Problem', 
+			topic: 'Problem',
 			emotion: 'Neutral',
 			webcam: webcamRef
 		}, 
@@ -20,7 +20,7 @@ const config = (webcamRef) =>{
 			{
 				widgetName: 'StartUpOptions',
 				widgetFunc: (props) => <StartUpOptions {...props}/>,
-				mapStateToProps: ['webcam']
+				mapStateToProps: ['webcam', 'topic']
 			},
 
 		],

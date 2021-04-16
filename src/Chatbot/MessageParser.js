@@ -11,44 +11,47 @@ class MessageParser{
 
   async parse(message) {
   	
-    let image = takeScreenshot(this.state.webcam)
-    let currentEmotion = await fetchEmotion(image)
-    let currentResponseType = await fetchResponseType(message)
-    this.setEmotion(currentEmotion)
-    this.setTopic(currentResponseType)
-    console.log(this.state)
-    
-    switch(this.state.topic){
+    if(this.state.topic === 'Problems'){
+        let image = takeScreenshot(this.state.webcam)
+        let currentEmotion = await fetchEmotion(image)
+        this.setEmotion(currentEmotion)
+        console.log(currentEmotion)
+    } else {
+        
+        let currentResponseType = await fetchResponseType(message)
+        this.setTopic(currentResponseType)
 
-     case 'greeting':
-     this.actionProvider.greet()
-     break;
+        switch(this.state.topic){
 
-     case 'goodbye':
-     this.actionProvider.sayGoodbye()
-     break;
+         case 'greeting':
+         this.actionProvider.greet()
+         break;
 
-     case 'help':
-     this.actionProvider.askForAssistance()
-     break;
+         case 'goodbye':
+         this.actionProvider.sayGoodbye()
+         break;
 
-     case 'name':
-     this.actionProvider.giveName()
-     break;
+         case 'help':
+         this.actionProvider.askForAssistance()
+         break;
 
-     case 'appreciation':
-     this.actionProvider.giveAppreciation()
-     break;
+         case 'name':
+         this.actionProvider.giveName()
+         break;
 
-     case 'issues':
-     break;
+         case 'appreciation':
+         this.actionProvider.giveAppreciation()
+         break;
 
-     default:
-     this.actionProvider.askForExplanation()
+         case 'issues':
+         break;
 
-   }
+         default:
+         this.actionProvider.askForExplanation()
 
+        }
 
+    }
 
  }
 

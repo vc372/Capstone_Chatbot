@@ -4,8 +4,8 @@ import "./options.css";
 
 const StartUpOptions = (props) => {
   const options = [
-    { text: "Ready to Get Started!", handler: () => props.actionProvider.start(props.webcam), id: 1 },
-    { text: "Still have more questions..", handler: () => {}, id: 2 },
+    { text: "Ready to Get Started!", handler: () => props.actionProvider.startConversation(props.webcam), id: 1 },
+    { text: "Still have more questions..", handler: () => props.actionProvider.startQuestioning(), id: 2 },
   ];
 
   const optionsMarkup = options.map((option) => (
