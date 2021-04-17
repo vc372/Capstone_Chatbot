@@ -69,5 +69,3 @@ def preprocess(message):
   X_no_stopwords = test['cleaned_text_no_stopwords']
 
   return X_no_stopwords
-
-preprocess("I hate everything")
