@@ -12,13 +12,37 @@ class MessageParser{
   async parse(message) {
   	
     if(this.state.topic === 'Problems'){
-        let image = takeScreenshot(this.state.webcam)
-        let currentEmotion = await fetchEmotion(image)
-        this.setEmotion(currentEmotion)
-        console.log(currentEmotion)
+        
+        switch(this.state.issue) {
+            case 'relationships':
+            var subIssue = await fetchResponseType('/determine_relationship_type', message)
+            var cause = await fetchResponseType('/determine_friendship_topic', message)
+            // let cause = await fetchResponseType('./determine_'+subIssue+'_cause', message)
+            console.log('Sub Issue: ' + subIssue)
+            console.log('Cause: ' + cause)
+            this.actionProvider.provideRelationshipResources(subIssue, cause)
+            break;
+
+            case 'self-esteem':
+            var subIssue = await fetchResponseType('/determine_self-esteem_type', message)
+            var cause = await fetchResponseType('/determine_friendship_topic', message)
+            this.actionProvider.provideSelfEsteemResources()
+            break;
+
+            case 'anxiety':
+            var subIssue = await fetchResponseType('/determine_anxiety_type', message)
+            var cause = await fetchResponseType('/determine_friendship_topic', message)
+            this.actionProvider.provideAnxietyResources()
+            break;
+
+            default:
+            let issue = 'relationships' //await fetchResponseType('./determine_issue', message)
+            this.actionProvider.askConfirmation(issue)
+        }
+       
     } else {
         
-        let currentResponseType = await fetchResponseType(message)
+        let currentResponseType = await fetchResponseType('/process_message', message)
         this.setTopic(currentResponseType)
 
         switch(this.state.topic){
@@ -54,14 +78,6 @@ class MessageParser{
     }
 
  }
-
- setTopic(topic) {
-   this.state.topic = topic
- }
-
- setEmotion(emotion) {
-  this.state.emotion = emotion
-}
 }
 
 export default MessageParser;

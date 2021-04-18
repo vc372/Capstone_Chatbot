@@ -2,6 +2,7 @@
 // Config starter code
 import { createChatBotMessage } from "react-chatbot-kit";
 import StartUpOptions from './Options/StartUpOptions';
+import ConfirmationOptions from './Options/ConfirmationOptions';
 const config = (webcamRef) =>{
 	return {
 
@@ -12,6 +13,9 @@ const config = (webcamRef) =>{
 		state: {
 			topic: 'Problem',
 			emotion: 'Neutral',
+			issue: 'undetermined',
+			subIssue: 'undetermined',
+			cause: 'undetermined',
 			webcam: webcamRef
 		}, 
 
@@ -22,6 +26,13 @@ const config = (webcamRef) =>{
 				widgetFunc: (props) => <StartUpOptions {...props}/>,
 				mapStateToProps: ['webcam', 'topic']
 			},
+
+			{
+				widgetName: 'ConfirmationOptions',
+				widgetFunc: (props) => <ConfirmationOptions {...props}/>,
+				mapStateToProps: ['issue']
+
+			}
 
 		],
 		
