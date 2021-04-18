@@ -1,66 +1,83 @@
 // MessageParser starter code
-
+import fetchEmotion from './API_Retrieval/fetchEmotion';
+import fetchResponseType from './API_Retrieval/fetchResponseType';
+import takeScreenshot from './API_Retrieval/takeScreenshot';
 class MessageParser{
 
   constructor(actionProvider, state) {
     this.actionProvider = actionProvider;
     this.state = state;
-    this.currentState = ''
   }
 
   async parse(message) {
-  	// console.log(this.state.webcam.current.getScreenshot())
-  	if(this.currentState !== 'issues'){
-		await fetch('/process_message?message='+message)
-		.then(response => response.json())
-		.then(data => this.setCurrentState(data['Response_text']))
+  	
+    if(this.state.topic === 'Problems'){
+        
+        switch(this.state.issue) {
+            case 'relationships':
+            var subIssue = await fetchResponseType('/determine_relationship_type', message)
+            var cause = await fetchResponseType('/determine_friendship_topic', message)
+            // let cause = await fetchResponseType('./determine_'+subIssue+'_cause', message)
+            console.log('Sub Issue: ' + subIssue)
+            console.log('Cause: ' + cause)
+            this.actionProvider.provideRelationshipResources(subIssue, cause)
+            break;
 
-		let data = {image: this.state.webcam.current.getScreenshot()}
-		await fetch('/process_image', {
-			method: 'POST',
-			body: JSON.stringify(data)
-		})
-		.then(response => response.json())
-		.then(data => console.log(data))
-  	}
+            case 'self-esteem':
+            var subIssue = await fetchResponseType('/determine_self-esteem_type', message)
+            var cause = await fetchResponseType('/determine_friendship_topic', message)
+            this.actionProvider.provideSelfEsteemResources()
+            break;
 
- 	switch(this.currentState){
+            case 'anxiety':
+            var subIssue = await fetchResponseType('/determine_anxiety_type', message)
+            var cause = await fetchResponseType('/determine_friendship_topic', message)
+            this.actionProvider.provideAnxietyResources()
+            break;
 
- 		case 'greeting':
- 			this.actionProvider.greet()
- 			break;
+            default:
+            let issue = 'relationships' //await fetchResponseType('./determine_issue', message)
+            this.actionProvider.askConfirmation(issue)
+        }
+       
+    } else {
+        
+        let currentResponseType = await fetchResponseType('/process_message', message)
+        this.setTopic(currentResponseType)
 
- 		case 'goodbye':
- 			this.actionProvider.sayGoodbye()
- 			break;
+        switch(this.state.topic){
 
- 		case 'help':
- 			this.actionProvider.askForAssistance()
- 			break;
+         case 'greeting':
+         this.actionProvider.greet()
+         break;
 
- 		case 'name':
- 			this.actionProvider.giveName()
- 			break;
+         case 'goodbye':
+         this.actionProvider.sayGoodbye()
+         break;
 
- 		case 'appreciation':
- 			this.actionProvider.giveAppreciation()
- 			break;
+         case 'help':
+         this.actionProvider.askForAssistance()
+         break;
 
- 		case 'issues':
- 			break;
+         case 'name':
+         this.actionProvider.giveName()
+         break;
 
- 		default:
- 			this.actionProvider.askForExplanation()
+         case 'appreciation':
+         this.actionProvider.giveAppreciation()
+         break;
 
- 	}
+         case 'issues':
+         break;
 
- 
-    
-  }
+         default:
+         this.actionProvider.askForExplanation()
 
-  setCurrentState(state) {
-  	this.currentState = state
-  }
+        }
+
+    }
+
+ }
 }
 
 export default MessageParser;

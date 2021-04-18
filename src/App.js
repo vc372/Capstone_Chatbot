@@ -5,10 +5,12 @@ import config from './Chatbot/config'
 import MessageParser from './Chatbot/MessageParser'
 import ActionProvider from './Chatbot/ActionProvider'
 import Webcam from "react-webcam";	
+import fetchResponseType from './Chatbot/API_Retrieval/fetchResponseType'
 class App extends Component{
 	constructor(props){
 		super(props);
 		this.webcamRef = React.createRef()
+		fetchResponseType('./determine_friendship_topic', '')
 	}
 	// const webcamRef = useRef()
 

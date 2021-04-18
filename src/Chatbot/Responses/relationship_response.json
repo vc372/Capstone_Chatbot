@@ -1,0 +1,12 @@
+{"friendship": [
+	{"tag": "long distance",
+		"patterns": ["Here’s an article that I found that might help! It will give you a breakdown of the pros and cons of long distance friendships and how to navigate them. Hopefully this will help!", "https://kerb.com/long-distance-friendships/"]
+	},
+
+	{"tag": "games",
+		"patterns": ["Here’s something that I found that might help! There are lots of apps that allow for multiplayer games 👾 to help you and your friends stay connected!", "https://www.thrillist.com/news/nation/online-games-virtual-game-night-multiplayer-apps"]
+	},
+	{"tag": "communication",
+		"patterns": ["Here’s an article that I found that might help! It talks about ways to improve communication and how to navigate arguments. Hopefully this will help!", "https://www.liveabout.com/ways-to-improve-communication-1385328"]
+	} 	
+]}

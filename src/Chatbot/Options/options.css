@@ -1,0 +1,31 @@
+.options-container {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 75%;
+}
+
+.option-button {
+  padding: 0.5rem;
+  border-radius: 25px;
+  background: transparent;
+  border: 2px solid #5BC236;
+  margin: 5px;
+  height: 30px;
+  width: fit-content;
+  outline: none;
+  cursor: pointer;
+  transition: 0.25s;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Arial';
+  font-weight: bold;
+
+}
+
+.option-button:hover {
+  padding-right: 10px;
+  background-color: #5BC236;
+  color: white;
+}
+

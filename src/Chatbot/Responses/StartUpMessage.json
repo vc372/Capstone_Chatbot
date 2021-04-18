@@ -1,0 +1,12 @@
+{"emotions": [
+	{"tag": "happy",
+		"patterns": ["Somebody is in a good mood 😊, wanna tell me what happened today?", "Wow correct if my wrong but you look pretty happy! Tell me what's on your mind", "Hmm what's got you all smiling today? 🧐. Share the details"]
+	},
+
+	{"tag": "neutral",
+		"patterns": ["How was your day today?", "So what can I help you with?", "Anything on your mind today?"]
+	},
+	{"tag": "sad",
+		"patterns": ["Hey you okay? I'm here to help as best as I can.", "I'm here to listen to you, so you can tell me as much or little as you would like. Anything I can help you with?"]
+	} 	
+]}

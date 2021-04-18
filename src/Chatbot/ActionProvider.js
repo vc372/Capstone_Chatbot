@@ -1,9 +1,62 @@
 // ActionProvider starter code
+import fetchEmotion from './API_Retrieval/fetchEmotion';
+import takeScreenshot from './API_Retrieval/takeScreenshot';
+import StartUpMessage from './Responses/StartUpMessage.json';
+import relationship_response from './Responses/relationship_response.json';
 class ActionProvider {
   constructor(createChatBotMessage, setStateFunc, createClientMessage) {
     this.createChatBotMessage = createChatBotMessage;
     this.setState = setStateFunc;
     this.createClientMessage = createClientMessage;
+  }
+
+  async startConversation(webcamref) {
+
+    let image = takeScreenshot(webcamref)
+    
+    let delay = Math.floor(Math.random() * 500)
+    let startMessage1 = this.createChatBotMessage('So my job is to help you find resources 📔 that maybe can give you some more perspective on whatever is on your mind.', delay)
+    this.updateChatbotState(startMessage1)
+
+    let emotion = await fetchEmotion(image)
+    console.log(emotion)
+    let startMessage = this.retrieveResponse(StartUpMessage['emotions'], emotion)
+    startMessage = this.createChatBotMessage(startMessage)
+    this.updateChatbotState(startMessage)
+
+    let topic = 'Problems'
+    this.updateConversationDirection(topic)
+  }
+
+  askConfirmation(issue){
+    let msg = this.createChatBotMessage('Just to confirm, you are talking about ' + issue, {
+      widget: 'ConfirmationOptions'
+    })
+    this.updateConversationIssue(issue)
+    this.updateChatbotState(msg)
+  }
+
+  askQuestionAboutIssue(issue) {
+    let msg = this.createChatBotMessage('So what do you believe to be the cause of your ' + issue + ' problem?')
+    this.updateChatbotState(msg)
+  }
+
+  askWhichIssue() {
+
+  }
+
+  provideRelationshipResources(subIssue, cause) {
+    let response = this.retrieveResponse(relationship_response[subIssue], cause)
+    let msg = this.createChatBotMessage(response)
+    this.updateChatbotState(msg)
+  }
+
+  startQuestioning() {
+    let startMessage1= this.createChatBotMessage('Go ahead and ask some questions you have about me')
+    this.updateChatbotState(startMessage1)
+
+    let topic = 'Questions'
+    this.updateConversationDirection(topic)
   }
 
   greet() {
@@ -36,13 +89,29 @@ class ActionProvider {
     this.updateChatbotState(appreciativeMessage)
   }
 
+  retrieveResponse(json, label){
+    for(var i = 0; i < json.length; i++){
+      if(json[i]['tag'] === label){
+        return json[i]['patterns'][Math.floor(Math.random() * json[i]['patterns'].length)]   
+      }
+    }
 
+    return 'Could not identify label'
+  }
 
-  
+  updateConversationDirection(topic) {
+    this.setState(prevState => ({
+      ...prevState, topic: topic, messages: [...prevState.messages]
+    }))
+  }
+
+  updateConversationIssue(issue) {
+    this.setState(prevState => ({
+      ...prevState, issue: issue, messages: [...prevState.messages]
+    }))
+  }
+
   updateChatbotState(message) {
- 
-// NOTE: This function is set in the constructor, and is passed in      // from the top level Chatbot component. The setState function here     // actually manipulates the top level state of the Chatbot, so it's     // important that we make sure that we preserve the previous state.
- 
    this.setState(prevState => ({
     	...prevState, messages: [...prevState.messages, message]
     }))
