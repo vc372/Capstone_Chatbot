@@ -10,19 +10,19 @@ Original file is located at
 #Imports
 import numpy as np
 import torch
-import Preprocessing_nn_model.py
-import Loads_NN_Model.py
+import preprocessing_nn_model
+import load_nn_model
 
 #Prediction Function with model and message as input
-def predict_with_model(message, path_model, path_state_dict, path_vectorizer):
-  device = device = "cuda" if torch.cuda.is_available() else "cpu"
+def predict_with_model(message, model, vectorizer):
+
   #Preprocessing of Input
-  X_no_stopwards = Preprocessing_nn_model.preprocess(message)
-  model,vectorizer = Loads_NN_Model.load_model(path_model, path_state_dict, path_vectorizer)
+  X_no_stopwords = preprocessing_nn_model.preprocess(message)
+  # model,vectorizer = load_nn_model.load_model(path_model, path_state_dict, path_vectorizer)
 
   #Input into model and returns classifciation
   test_features = vectorizer.transform(X_no_stopwords)
-  test_features_tensor = csr2tensor(test_features).to(device)
+  test_features_tensor = preprocessing_nn_model.csr2tensor(test_features)
   output = model(test_features_tensor) 
   y_pred = torch.argmax(output).item()
 
@@ -34,7 +34,7 @@ def predict_with_model(message, path_model, path_state_dict, path_vectorizer):
   if y_test_predict[0] == 0:
     category = 'anxiety'
   if y_test_predict[0] == 1:
-    category = 'relationships'
+    category = 'relationship'
   if y_test_predict[0] == 2:
     category = 'self-esteem'
 

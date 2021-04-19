@@ -1,0 +1,17 @@
+.HyperLink-Container{
+	width: fit-content;
+	height: 40px;
+	border-radius:5px;
+	background-color: #5BC236;
+	text-align: center;
+}
+
+a:link {
+	color: white;
+	margin: 10px;
+	padding-top: 10px;
+}
+
+.Link {
+	font-size: 20px;
+}

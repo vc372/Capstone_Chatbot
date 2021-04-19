@@ -14,13 +14,10 @@ class MessageParser{
     if(this.state.topic === 'Problems'){
         
         switch(this.state.issue) {
-            case 'relationships':
-            var subIssue = await fetchResponseType('/determine_relationship_type', message)
-            var cause = await fetchResponseType('/determine_friendship_topic', message)
-            // let cause = await fetchResponseType('./determine_'+subIssue+'_cause', message)
-            console.log('Sub Issue: ' + subIssue)
+            case 'relationship':
+            var cause = await fetchResponseType('/determine_relationship_subtopic', message)
             console.log('Cause: ' + cause)
-            this.actionProvider.provideRelationshipResources(subIssue, cause)
+            this.actionProvider.provideRelationshipResources(cause)
             break;
 
             case 'self-esteem':
@@ -36,7 +33,8 @@ class MessageParser{
             break;
 
             default:
-            let issue = 'relationships' //await fetchResponseType('./determine_issue', message)
+            let issue = await fetchResponseType('/determine_problem_type', message) //await fetchResponseType('./determine_issue', message)
+            console.log(issue)
             this.actionProvider.askConfirmation(issue)
         }
        

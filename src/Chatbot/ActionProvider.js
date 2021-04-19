@@ -20,7 +20,7 @@ class ActionProvider {
 
     let emotion = await fetchEmotion(image)
     console.log(emotion)
-    let startMessage = this.retrieveResponse(StartUpMessage['emotions'], emotion)
+    let startMessage = this.retrieveResponse(StartUpMessage['emotions'], emotion, true)
     startMessage = this.createChatBotMessage(startMessage)
     this.updateChatbotState(startMessage)
 
@@ -45,10 +45,17 @@ class ActionProvider {
 
   }
 
-  provideRelationshipResources(subIssue, cause) {
-    let response = this.retrieveResponse(relationship_response[subIssue], cause)
-    let msg = this.createChatBotMessage(response)
-    this.updateChatbotState(msg)
+  provideRelationshipResources(cause) {
+    console.log(relationship_response['intents'])
+    let response = this.retrieveResponse(relationship_response['intents'], cause, false)
+
+    let hyperLink = response[1]
+    this.updateLink(hyperLink)
+
+    let hyperLinkMsg = this.createChatBotMessage(response[0], {
+      widget: 'HyperLink'
+    })
+    this.updateChatbotState(hyperLinkMsg)
   }
 
   startQuestioning() {
@@ -89,16 +96,27 @@ class ActionProvider {
     this.updateChatbotState(appreciativeMessage)
   }
 
-  retrieveResponse(json, label){
+  retrieveResponse(json, label, random){
+    console.log(json)
     for(var i = 0; i < json.length; i++){
       if(json[i]['tag'] === label){
-        return json[i]['patterns'][Math.floor(Math.random() * json[i]['patterns'].length)]   
+        if(random){
+          return json[i]['patterns'][Math.floor(Math.random() * json[i]['patterns'].length)]
+        } 
+
+        return json[i]['patterns']
+           
       }
     }
 
     return 'Could not identify label'
   }
 
+  updateLink(link){
+    this.setState(prevState => ({
+      ...prevState, link: link, messages: [...prevState.messages]
+    }))
+  }
   updateConversationDirection(topic) {
     this.setState(prevState => ({
       ...prevState, topic: topic, messages: [...prevState.messages]

@@ -1,4 +1,4 @@
-{"friendship": [
+{"intents": [
 	{"tag": "long distance",
 		"patterns": ["Here’s an article that I found that might help! It will give you a breakdown of the pros and cons of long distance friendships and how to navigate them. Hopefully this will help!", "https://kerb.com/long-distance-friendships/"]
 	},

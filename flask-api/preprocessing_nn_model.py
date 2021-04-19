@@ -12,12 +12,10 @@ import numpy as np
 import pandas as pd
 import nltk
 from nltk import tokenize
-nltk.download('punkt')
 from nltk.corpus import stopwords
-nltk.download('stopwords')
 from nltk.stem import WordNetLemmatizer
-nltk.download('wordnet')
 import re
+import torch
 
 #helper functions
 def sentence_and_word_tokenize(doc):

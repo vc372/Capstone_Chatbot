@@ -1,8 +1,9 @@
 
 // Config starter code
 import { createChatBotMessage } from "react-chatbot-kit";
-import StartUpOptions from './Options/StartUpOptions';
-import ConfirmationOptions from './Options/ConfirmationOptions';
+import StartUpOptions from './CustomComponents/Options/StartUpOptions';
+import ConfirmationOptions from './CustomComponents/Options/ConfirmationOptions';
+import HyperLink from './CustomComponents/HyperLink';
 const config = (webcamRef) =>{
 	return {
 
@@ -16,6 +17,7 @@ const config = (webcamRef) =>{
 			issue: 'undetermined',
 			subIssue: 'undetermined',
 			cause: 'undetermined',
+			link: 'undetermined',
 			webcam: webcamRef
 		}, 
 
@@ -32,6 +34,11 @@ const config = (webcamRef) =>{
 				widgetFunc: (props) => <ConfirmationOptions {...props}/>,
 				mapStateToProps: ['issue']
 
+			}, 
+			{
+				widgetName: 'HyperLink',
+				widgetFunc: (props) => <HyperLink {...props}/>, 
+				mapStateToProps: ['link']
 			}
 
 		],
