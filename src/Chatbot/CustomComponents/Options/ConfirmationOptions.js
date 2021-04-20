@@ -4,7 +4,7 @@ import "./options.css";
 
 const ConfirmationOptions = (props) => {
   const options = [
-    { text: "Yes", handler: () => props.actionProvider.askQuestionAboutIssue(props.issue), id: 1 },
+    { text: "Yes", handler: () => props.actionProvider.askAboutFeelings(props.issue), id: 1 },
     { text: "No", handler: () => props.actionProvider.askWhichIssue(), id: 2 },
   ];
 

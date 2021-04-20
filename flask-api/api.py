@@ -48,7 +48,7 @@ def init_resources():
 @app.route('/process_message', methods=['GET'])
 def message_api():	
 	message = request.args.get('message')
-	predicted_label = data_processing.generate_response([message], app.wv, app.general_embedding, app.general_labels)
+	predicted_label = data_processing.generate_response([message], app.wv, app.general_embedding, app.general_labels, 25)
 	return {'Message_Label': str(predicted_label)}
 
 @app.route('/process_image', methods=['POST'])

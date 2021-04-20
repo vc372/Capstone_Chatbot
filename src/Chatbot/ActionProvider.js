@@ -29,20 +29,48 @@ class ActionProvider {
   }
 
   askConfirmation(issue){
-    let msg = this.createChatBotMessage('Just to confirm, you are talking about ' + issue, {
-      widget: 'ConfirmationOptions'
+    let msg1 = this.createChatBotMessage('Your feelings are valid.')
+    this.updateChatbotState(msg1)
+    let msg2 = this.createChatBotMessage('Just form my sake, you are talking about: ' + issue, {
+      widget: 'ConfirmationOptions',
+      delay: 2000
     })
+    this.updateChatbotState(msg2)
     this.updateConversationIssue(issue)
-    this.updateChatbotState(msg)
   }
 
-  askQuestionAboutIssue(issue) {
-    let msg = this.createChatBotMessage('So what do you believe to be the cause of your ' + issue + ' problem?')
+  acknowledge(){
+    let msg = this.createChatBotMessage('I understand')
     this.updateChatbotState(msg)
+
+    let msg2 = this.createChatBotMessage('go on..', {
+      delay: 2000, 
+      widget: 'FinishOption'
+    })
+    this.updateChatbotState(msg2)
+  }
+  askAboutFeelings(issue) {
+    this.updateConversationIssue(issue)
+    let msg1 = this.createChatBotMessage('It\'s normal for even the best of relationships to not be perfect.')
+    this.updateChatbotState(msg1)
+    let msg2 = this.createChatBotMessage('Tell me everything that\'s on your mind about your ' + issue, {
+      delay: 2000
+    })
+    this.updateChatbotState(msg2)
+    this.updateConversationDirection('Listening')
+  }
+
+  askQuestionAboutIssue() {
+    let msg = this.createChatBotMessage('So tell me why do you think you feel this way?')
+    this.updateChatbotState(msg)
+    this.updateConversationDirection('Problems')
   }
 
   askWhichIssue() {
-
+    let msg = this.createChatBotMessage('Please select which category you want to talk about', {
+      widget: "TopicOptions"
+    })
+    this.updateChatbotState(msg)
   }
 
   provideRelationshipResources(cause) {

@@ -38,12 +38,11 @@ class MessageParser{
             this.actionProvider.askConfirmation(issue)
         }
        
-    } else {
+    } else if(this.state.topic === 'Questions'){
         
         let currentResponseType = await fetchResponseType('/process_message', message)
-        this.setTopic(currentResponseType)
 
-        switch(this.state.topic){
+        switch(currentResponseType){
 
          case 'greeting':
          this.actionProvider.greet()
@@ -73,6 +72,8 @@ class MessageParser{
 
         }
 
+    } else if(this.state.topic === 'Listening'){
+        this.actionProvider.acknowledge()
     }
 
  }

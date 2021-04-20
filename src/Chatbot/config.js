@@ -4,9 +4,12 @@ import { createChatBotMessage } from "react-chatbot-kit";
 import StartUpOptions from './CustomComponents/Options/StartUpOptions';
 import ConfirmationOptions from './CustomComponents/Options/ConfirmationOptions';
 import HyperLink from './CustomComponents/HyperLink';
+import TopicOptions from './CustomComponents/Options/TopicOptions';
+import FinishOption from './CustomComponents/Options/FinishOption';
+
 const config = (webcamRef) =>{
 	return {
-
+		botName: 'KANA',
 		initialMessages: [createChatBotMessage(`Hi! I'm KANA! I use machine learning 🤖 to try and provide 
 							relevant resources for you, while learning about your mood 😃🙃, so I can respond more appropriately!`, {
 			widget: 'StartUpOptions',
@@ -39,6 +42,16 @@ const config = (webcamRef) =>{
 				widgetName: 'HyperLink',
 				widgetFunc: (props) => <HyperLink {...props}/>, 
 				mapStateToProps: ['link']
+			}, 
+
+			{
+				widgetName: 'TopicOptions', 
+				widgetFunc: (props) => <TopicOptions {...props}/>
+			}, 
+
+			{
+				widgetName: 'FinishOption', 
+				widgetFunc: (props) => <FinishOption {...props}/>
 			}
 
 		],
