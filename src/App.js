@@ -29,7 +29,7 @@ class App extends Component{
 
 		return (
 		    <div className="Chatframe">
-		    	<SplitPane split='vertical' minSize={50} defaultSize={100}>
+		    	<SplitPane split='vertical' minSize={50} defaultSize={300}>
 		    		<div id='WebCamFrame'>
 			  			<Webcam 
 			  			id='webcam'

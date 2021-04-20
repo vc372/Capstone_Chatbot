@@ -6,10 +6,15 @@ import ConfirmationOptions from './CustomComponents/Options/ConfirmationOptions'
 import HyperLink from './CustomComponents/HyperLink';
 import TopicOptions from './CustomComponents/Options/TopicOptions';
 import FinishOption from './CustomComponents/Options/FinishOption';
+import BotAvatar from './CustomComponents/BotAvatar';
 
 const config = (webcamRef) =>{
 	return {
 		botName: 'KANA',
+		customComponents: {
+			botAvatar: (props) => <BotAvatar {...props}/>
+		},
+
 		initialMessages: [createChatBotMessage(`Hi! I'm KANA! I use machine learning 🤖 to try and provide 
 							relevant resources for you, while learning about your mood 😃🙃, so I can respond more appropriately!`, {
 			widget: 'StartUpOptions',
