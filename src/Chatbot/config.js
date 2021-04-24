@@ -8,15 +8,14 @@ import TopicOptions from './CustomComponents/Options/TopicOptions';
 import FinishOption from './CustomComponents/Options/FinishOption';
 import BotAvatar from './CustomComponents/BotAvatar';
 
-const config = (webcamRef) =>{
+const config = (webcamRef, name) =>{
 	return {
 		botName: 'KANA',
 		customComponents: {
 			botAvatar: (props) => <BotAvatar {...props}/>
 		},
 
-		initialMessages: [createChatBotMessage(`Hi! I'm KANA! I use machine learning 🤖 to try and provide 
-							relevant resources for you, while learning about your mood 😃🙃, so I can respond more appropriately!`, {
+		initialMessages: [createChatBotMessage('Hi ' + name + '! I\'m KANA! I use machine learning 🤖 to try and provide relevant resources for you, while learning about your mood 😃🙃, so I can respond more appropriately!', {
 			widget: 'StartUpOptions',
 		})], 
 		state: {
@@ -26,6 +25,7 @@ const config = (webcamRef) =>{
 			subIssue: 'undetermined',
 			cause: 'undetermined',
 			link: 'undetermined',
+			name: name,
 			webcam: webcamRef
 		}, 
 
