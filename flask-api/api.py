@@ -57,8 +57,8 @@ def image_api():
 	img_data = json.loads(img_data)['image']
 	data_processing.save_image(img_data)
 	detector, predictor = facial_recognition.get_detection_classifier()
-	label = facial_recognition.classify_image('Resources/screenshot.png', 'Resources/fer/model.pth', detector, predictor)
-	return {'Image_label': str(label)}
+	label, detection = facial_recognition.classify_image('Resources/screenshot.png', 'Resources/fer/model.pth', detector, predictor)
+	return {'Image_label': str(label), 'Detection': str(detection)}
 
 @app.route('/determine_problem_type', methods=['GET'])
 def problem_api():

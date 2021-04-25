@@ -45,6 +45,7 @@ def dlib_face_detection(image_path, detector, predictor):
     # detect faces in the grayscale image
     rects = detector(gray, 1)
     # loop over the face detections
+    detect_bool = False
     for (i, rect) in enumerate(rects):
       detect_bool = True
       # determine the facial landmarks for the face region, then
@@ -60,8 +61,8 @@ def dlib_face_detection(image_path, detector, predictor):
       if y < 0:
         y = 0
       cropped_image = image[y:y+h, x:x+w]
-      return cropped_image
-    return cv2.imread(image_path)
+      return cropped_image, "True"
+    return cv2.imread(image_path), "False"
     cv2.waitKey(0)
 
 def get_model():
@@ -110,7 +111,7 @@ def classify_image(image_path, model_local_path, detector, predictor):
 
   emotions = ["happy", "sad", "neutral"]
 
-  image = dlib_face_detection(image_path, detector, predictor)
+  image, detection = dlib_face_detection(image_path, detector, predictor)
 
   image = Image.fromarray(image, 'RGB')
   image.thumbnail((48,48))
@@ -121,7 +122,8 @@ def classify_image(image_path, model_local_path, detector, predictor):
   model.eval()
   prediction = model(image)
   _,tensor = torch.max(prediction, 1)
+  print("Detection: " + str(detection))
   print("FACIAL EMOTION: " + str(emotions[tensor]))
   #with open("Resources/label.txt", "w") as fh:
    #   fh.write(str(emotions[tensor]))
-  return emotions[tensor]
+  return emotions[tensor], str(detection)

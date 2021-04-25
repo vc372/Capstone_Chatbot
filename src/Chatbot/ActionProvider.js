@@ -3,10 +3,18 @@ import fetchEmotion from './API_Retrieval/fetchEmotion';
 import takeScreenshot from './API_Retrieval/takeScreenshot';
 import StartUpMessage from './Responses/StartUpMessage.json';
 import relationship_response from './Responses/relationship_response.json';
-class ActionProvider {
-  constructor(createChatBotMessage, setStateFunc, createClientMessage) {
+import { Component } from 'react';
+import fetchDetection from './API_Retrieval/fetchDetection';
+import EmotionImage from './CustomComponents/EmotionImage';
+
+class ActionProvider extends Component{
+  constructor(createChatBotMessage, setStateFunc, createClientMessage, props) {
+    super(props)
     this.createChatBotMessage = createChatBotMessage;
     this.setState = setStateFunc;
+    this.state={
+      imageName : 'neutral.png'
+    }
     this.createClientMessage = createClientMessage;
   }
 
@@ -19,7 +27,27 @@ class ActionProvider {
     this.updateChatbotState(startMessage1)
 
     let emotion = await fetchEmotion(image)
-    console.log(emotion)
+    let detection = await fetchDetection(image)
+    let startMessage2 = this.createChatBotMessage('Facial Detection: ' + detection)
+    this.updateChatbotState(startMessage2)
+
+    let startMessage3;
+    switch(emotion){
+      case('happy'):
+      startMessage3 = this.createChatBotMessage('Facial Emotion: ' + emotion + ' 😄');
+      break;
+      case('neutral'):
+      startMessage3 = this.createChatBotMessage('Facial Emotion: ' + emotion + ' 😐');
+      break;
+      case('sad'):
+      startMessage3 = this.createChatBotMessage('Facial Emotion: ' + emotion + ' 😔');
+      break;
+    }
+    this.updateChatbotState(startMessage3)
+    // let image_string = emotion + '.png'
+
+		//this.setState({imageName: 'sad.png'})
+
     let startMessage = this.retrieveResponse(StartUpMessage['emotions'], emotion, true)
     startMessage = this.createChatBotMessage(startMessage)
     this.updateChatbotState(startMessage)
@@ -160,6 +188,12 @@ class ActionProvider {
   updateChatbotState(message) {
    this.setState(prevState => ({
     	...prevState, messages: [...prevState.messages, message]
+    }))
+  }
+
+  updateEmotion(emotion) {
+    this.setState(prevState => ({
+      ...prevState, emotion: emotion, messages: [...prevState.messages]
     }))
   }
 }
