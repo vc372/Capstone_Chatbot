@@ -1,0 +1,24 @@
+.JournalEntry {
+	width:90%;
+	height: auto;
+	cursor: pointer;
+	border-width: 0.1px;
+	padding: 10px;
+	font-weight: bold;
+	color: #9c27b0;
+}
+
+.JournalEntry:hover {
+  	color: white;
+  	transition: 0.25s
+}
+
+.JournalContainer {
+	display: flex;
+	flex-direction: column;
+	width: 257px;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 5px;
+	background-color: #ea80fc;
+}

@@ -7,7 +7,9 @@ import HyperLink from './CustomComponents/HyperLink';
 import TopicOptions from './CustomComponents/Options/TopicOptions';
 import FinishOption from './CustomComponents/Options/FinishOption';
 import BotAvatar from './CustomComponents/BotAvatar';
-
+import GratitudeConfirmationOption from './CustomComponents/Options/GratitudeConfirmationOption';
+import FinishGratitudeJournalingOption from './CustomComponents/Options/FinishGratitudeJournalingOption';
+import JournalEntryDisplay from './CustomComponents/JournalEntryDisplay';
 const config = (webcamRef, name) =>{
 	return {
 		botName: 'KANA',
@@ -25,6 +27,7 @@ const config = (webcamRef, name) =>{
 			subIssue: 'undetermined',
 			cause: 'undetermined',
 			link: 'undetermined',
+			journalMessageNumberArray: [],
 			name: name,
 			webcam: webcamRef
 		}, 
@@ -57,7 +60,24 @@ const config = (webcamRef, name) =>{
 			{
 				widgetName: 'FinishOption', 
 				widgetFunc: (props) => <FinishOption {...props}/>
+			}, 
+
+			{
+				widgetName: 'GratitudeConfirmationOption', 
+				widgetFunc: (props) => <GratitudeConfirmationOption {...props}/>
+			}, 
+
+			{
+				widgetName: 'FinishGratitudeJournalingOption', 
+				widgetFunc: (props) => <FinishGratitudeJournalingOption {...props}/>
+			}, 
+
+			{
+				widgetName: 'JournalEntryDisplay', 
+				widgetFunc: (props) => <JournalEntryDisplay {...props}/>, 
+				mapStateToProps: ['messages', 'journalMessageNumberArray']
 			}
+
 
 		],
 		

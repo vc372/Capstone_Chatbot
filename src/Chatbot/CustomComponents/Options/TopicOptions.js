@@ -4,9 +4,9 @@ import "./options.css";
 
 const ConfirmationOptions = (props) => {
   const options = [
-    { text: "Anxiety", handler: () => props.actionProvider.askQuestionAboutIssue('anxiety'), id: 1 },
-    { text: "Relationships", handler: () => props.actionProvider.askQuestionAboutIssue('relationship'), id: 2 },
-    { text: "Self-Esteem", handler: () => props.actionProvider.askQuestionAboutIssue('self-esteem'), id: 3 }
+    { text: "Anxiety", handler: () => props.actionProvider.askAboutFeelings('anxiety'), id: 1 },
+    { text: "Relationships", handler: () => props.actionProvider.askAboutFeelings('relationship'), id: 2 },
+    { text: "Self-Esteem", handler: () => props.actionProvider.askAboutFeeings('self-esteem'), id: 3 }
   ];
 
   const optionsMarkup = options.map((option) => (

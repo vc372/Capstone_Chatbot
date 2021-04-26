@@ -5,16 +5,13 @@ import StartUpMessage from './Responses/StartUpMessage.json';
 import relationship_response from './Responses/relationship_response.json';
 import { Component } from 'react';
 import fetchDetection from './API_Retrieval/fetchDetection';
-import EmotionImage from './CustomComponents/EmotionImage';
+// import EmotionImage from './CustomComponents/EmotionImage';
 
 class ActionProvider extends Component{
   constructor(createChatBotMessage, setStateFunc, createClientMessage, props) {
     super(props)
     this.createChatBotMessage = createChatBotMessage;
     this.setState = setStateFunc;
-    this.state={
-      imageName : 'neutral.png'
-    }
     this.createClientMessage = createClientMessage;
   }
 
@@ -23,38 +20,71 @@ class ActionProvider extends Component{
     let image = takeScreenshot(webcamref)
     
     let delay = Math.floor(Math.random() * 500)
-    let startMessage1 = this.createChatBotMessage('So my job is to help you find resources 📔 that maybe can give you some more perspective on whatever is on your mind.', delay)
-    this.updateChatbotState(startMessage1)
+    let startMessage = this.createChatBotMessage('So my job is to help you find resources 📔 that maybe can give you some more perspective on whatever is on your mind.', delay)
+    this.updateChatbotState(startMessage)
 
     let emotion = await fetchEmotion(image)
     let detection = await fetchDetection(image)
-    let startMessage2 = this.createChatBotMessage('Facial Detection: ' + detection)
-    this.updateChatbotState(startMessage2)
+    let faceDetectionLabelMessage = this.createChatBotMessage('Facial Detection: ' + detection)
+    this.updateChatbotState(faceDetectionLabelMessage)
 
-    let startMessage3;
+    let emotionLabelMessage;
+    let topic = 'Problems' 
     switch(emotion){
       case('happy'):
-      startMessage3 = this.createChatBotMessage('Facial Emotion: ' + emotion + ' 😄');
+        emotionLabelMessage = this.createChatBotMessage('Facial Emotion: ' + emotion + ' 😄');
+        topic = 'Gratitude'
       break;
       case('neutral'):
-      startMessage3 = this.createChatBotMessage('Facial Emotion: ' + emotion + ' 😐');
+        emotionLabelMessage = this.createChatBotMessage('Facial Emotion: ' + emotion + ' 😐');
       break;
       case('sad'):
-      startMessage3 = this.createChatBotMessage('Facial Emotion: ' + emotion + ' 😔');
+        emotionLabelMessage = this.createChatBotMessage('Facial Emotion: ' + emotion + ' 😔');
       break;
     }
-    this.updateChatbotState(startMessage3)
-    // let image_string = emotion + '.png'
-
-		//this.setState({imageName: 'sad.png'})
-
-    let startMessage = this.retrieveResponse(StartUpMessage['emotions'], emotion, true)
-    startMessage = this.createChatBotMessage(startMessage)
-    this.updateChatbotState(startMessage)
-
-    let topic = 'Problems'
     this.updateConversationDirection(topic)
+
+    this.updateChatbotState(emotionLabelMessage)
+
+    let emotionSpecificResponse = this.retrieveResponse(StartUpMessage['emotions'], emotion, true)
+    emotionSpecificResponse = this.createChatBotMessage(emotionSpecificResponse)
+    this.updateChatbotState(emotionSpecificResponse)
+
+    if(emotion === 'happy') {
+      let gratitudeJournalingMsg = this.createChatBotMessage('Would you like to begin Gratitude Journaling?', {
+          widget: 'GratitudeConfirmationOption'
+        })
+      this.updateChatbotState(gratitudeJournalingMsg)
+    }
+    
+    
   }
+
+  beginGratitudeJournaling(){
+    let msg = this.createChatBotMessage('So you can start by letting me know all the goods things that happened today 🥳, no matter how big or small!')
+    this.updateChatbotState(msg)
+  }
+
+  acknowledgeJournalEntry(number){
+    let msg = this.createChatBotMessage('That\'s Awesome!')
+    this.updateChatbotState(msg)
+
+    let msg2 = this.createChatBotMessage('Anything else?', {
+      delay: 250, 
+      widget: 'FinishGratitudeJournalingOption'
+    })
+    this.updateChatbotState(msg2)
+
+    this.updateJournalEntryNumber(number)
+  }
+
+  reviewJournalEntries(){
+    let msg = this.createChatBotMessage('Here are your entries. Click on a message to remove it from your list.', {
+      widget: 'JournalEntryDisplay'
+    })
+    this.updateChatbotState(msg)
+  }
+
 
   askConfirmation(issue){
     let msg1 = this.createChatBotMessage('Your feelings are valid.')
@@ -72,7 +102,7 @@ class ActionProvider extends Component{
     this.updateChatbotState(msg)
 
     let msg2 = this.createChatBotMessage('go on..', {
-      delay: 2000, 
+      delay: 500, 
       widget: 'FinishOption'
     })
     this.updateChatbotState(msg2)
@@ -99,6 +129,7 @@ class ActionProvider extends Component{
       widget: "TopicOptions"
     })
     this.updateChatbotState(msg)
+    this.updateConversationDirection('Problems')
   }
 
   provideRelationshipResources(cause) {
@@ -194,6 +225,12 @@ class ActionProvider extends Component{
   updateEmotion(emotion) {
     this.setState(prevState => ({
       ...prevState, emotion: emotion, messages: [...prevState.messages]
+    }))
+  }
+
+  updateJournalEntryNumber(number) {
+    this.setState(prevState => ({
+      ...prevState, journalMessageNumberArray: [...prevState.journalMessageNumberArray, number], messages: [...prevState.messages]
     }))
   }
 }

@@ -15,6 +15,9 @@ class App extends Component{
 		this.webcamRef = React.createRef()
 	}
 	
+	componentDidUpdate() {
+		console.log(this.chatBotRef)
+	}
 	render(){
 		return (
 		    <div className="Chatframe">
@@ -38,6 +41,7 @@ class App extends Component{
 	   		 </div>
 	    
   		);
+  		
 
 	}
   	

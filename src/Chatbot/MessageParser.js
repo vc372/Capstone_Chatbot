@@ -10,7 +10,7 @@ class MessageParser{
   }
 
   async parse(message) {
-  	
+  	console.log(this.state.messages)
     if(this.state.topic === 'Problems'){
         
         switch(this.state.issue) {
@@ -74,6 +74,8 @@ class MessageParser{
 
     } else if(this.state.topic === 'Listening'){
         this.actionProvider.acknowledge()
+    } else if(this.state.topic === 'Gratitude'){
+        this.actionProvider.acknowledgeJournalEntry(this.state.messages.length)
     }
 
  }
