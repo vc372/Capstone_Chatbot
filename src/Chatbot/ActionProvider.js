@@ -89,7 +89,7 @@ class ActionProvider extends Component{
   askConfirmation(issue){
     let msg1 = this.createChatBotMessage('Your feelings are valid.')
     this.updateChatbotState(msg1)
-    let msg2 = this.createChatBotMessage('Just form my sake, you are talking about: ' + issue, {
+    let msg2 = this.createChatBotMessage('Just for my sake, you are talking about: ' + issue, {
       widget: 'ConfirmationOptions',
       delay: 2000
     })
@@ -97,7 +97,7 @@ class ActionProvider extends Component{
     this.updateConversationIssue(issue)
   }
 
-  acknowledge(){
+  acknowledge(number){
     let msg = this.createChatBotMessage('I understand')
     this.updateChatbotState(msg)
 
@@ -106,6 +106,7 @@ class ActionProvider extends Component{
       widget: 'FinishOption'
     })
     this.updateChatbotState(msg2)
+    this.updateJournalEntryNumber(number)
   }
   askAboutFeelings(issue) {
     this.updateConversationIssue(issue)
@@ -118,9 +119,14 @@ class ActionProvider extends Component{
     this.updateConversationDirection('Listening')
   }
 
-  askQuestionAboutIssue() {
-    let msg = this.createChatBotMessage('So tell me why do you think you feel this way?')
-    this.updateChatbotState(msg)
+  askQuestionAboutIssue(issue) {
+    let msg1 = this.createChatBotMessage('Here are your thoughts about your ' + issue + '. Click on an item to remove it from the list.', {
+      widget: 'JournalEntryDisplay'
+    })
+    this.updateChatbotState(msg1)
+
+    let msg2 = this.createChatBotMessage('So tell me why do you think you feel this way?')
+    this.updateChatbotState(msg2)
     this.updateConversationDirection('Problems')
   }
 

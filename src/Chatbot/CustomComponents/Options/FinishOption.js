@@ -4,7 +4,7 @@ import "./options.css";
 
 const FinishOption = (props) => {
   const options = [
-    { text: "I\'m Finished", handler: () => props.actionProvider.askQuestionAboutIssue(), id: 1 },
+    { text: "I\'m Finished", handler: () => props.actionProvider.askQuestionAboutIssue(props.issue), id: 1 },
   ];
 
   const optionsMarkup = options.map((option) => (

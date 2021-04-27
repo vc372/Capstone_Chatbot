@@ -73,7 +73,7 @@ class MessageParser{
         }
 
     } else if(this.state.topic === 'Listening'){
-        this.actionProvider.acknowledge()
+        this.actionProvider.acknowledge(this.state.messages.length)
     } else if(this.state.topic === 'Gratitude'){
         this.actionProvider.acknowledgeJournalEntry(this.state.messages.length)
     }

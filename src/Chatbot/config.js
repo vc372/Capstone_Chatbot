@@ -59,7 +59,8 @@ const config = (webcamRef, name) =>{
 
 			{
 				widgetName: 'FinishOption', 
-				widgetFunc: (props) => <FinishOption {...props}/>
+				widgetFunc: (props) => <FinishOption {...props}/>,
+				mapStateToProps: ['issue']
 			}, 
 
 			{
